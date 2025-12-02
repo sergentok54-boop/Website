@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ALIIS – Association Lorraine pour l’Informatique Inclusive Solidaire</title>
+  <meta name="description" content="ALIIS reconditionne du matériel informatique et forme au numérique à Nancy et Lunéville." />
+  
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap">
+
+  <style>
+    /* --- VARIABLES & RESET --- */
+    :root {
+      --primary-color: #007aff; /* Bleu Apple */
+      --primary-dark: #005ecb;
+      --secondary-color: #1d1d1f; /* Noir doux */
+      --text-color: #424245;
+      --bg-light: #fbfbfd;
+      --white: #ffffff;
+      --font-main: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      --border-radius: 20px;
+      --shadow-soft: 0 10px 30px -10px rgba(0,0,0,0.1);
+      --transition: 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    
+    body { 
+      font-family: var(--font-main); 
+      background: var(--bg-light); 
+      color: var(--text-color); 
+      line-height: 1.6; 
+      overflow-x: hidden; /* Évite le scroll horizontal */
+    }
+
+    h1, h2, h3 { color: var(--secondary-color); margin-top: 0; letter-spacing: -0.02em; }
+    a { text-decoration: none; color: inherit; transition: color 0.3s; }
+    ul { list-style: none; }
+
+    /* --- NAVIGATION (Glassmorphism) --- */
+    header { 
+      background: rgba(255, 255, 255, 0.8);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      position: sticky; top: 0; z-index: 1000;
+      border-bottom: 1px solid rgba(0,0,0,0.05);
+    }
+    .nav-container { 
+      max-width: 1200px; margin: auto; padding: 15px 20px; 
+      display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; 
+    }
+    .logo { font-size: 1.5rem; font-weight: 800; color: var(--secondary-color); }
+    nav ul { display: flex; gap: 30px; }
+    nav a { font-weight: 500; font-size: 0.95rem; color: #6e6e73; }
+    nav a:hover { color: var(--primary-color); }
+
+    /* --- HERO SECTION --- */
+    .hero-header {
+      background-image: url('https://i.pinimg.com/736x/a4/c9/80/a4c980f5bd5c0c44ac316fc4fc07aa68.jpg');
+      background-size: cover;
+      background-position: center;
+      padding: 160px 20px;
+      text-align: center;
+      color: var(--white);
+      position: relative;
+    }
+    .hero-header::before {
+      content: ''; position: absolute; top:0; left:0; right:0; bottom:0;
+      background: rgba(0,0,0,0.4); /* Assombrissement */
+      z-index: 1;
+    }
+    .hero-content { position: relative; z-index: 2; animation: fadeUp 1s ease-out; }
+    
+    .hero-header h1 { 
+      font-size: clamp(2.5rem, 5vw, 4rem); 
+      color: white; 
+      margin-bottom: 15px; 
+      text-shadow: 0 4px 10px rgba(0,0,0,0.3);
+    }
+    .hero-header p { 
+      font-size: 1.2rem; color: #f5f5f7; max-width: 600px; margin: 0 auto 30px; 
+    }
+    .hero-btns { display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; }
+
+    @keyframes fadeUp { from { opacity:0; transform:translateY(20px); } to { opacity:1; transform:translateY(0); } }
+
+    /* --- BOUTONS --- */
+    .btn { 
+      padding: 12px 28px; border-radius: 50px; font-weight: 600; cursor: pointer; 
+      transition: all 0.3s ease; display: inline-block;
+    }
+    .btn-primary { background: var(--primary-color); color: white; border: none; }
+    .btn-primary:hover { background: var(--primary-dark); transform: scale(1.05); box-shadow: 0 5px 15px rgba(0,122,255,0.3); }
+    
+    .btn-outline { background: rgba(255,255,255,0.1); border: 1px solid white; color: white; backdrop-filter: blur(5px); }
+    .btn-outline:hover { background: white; color: var(--secondary-color); transform: scale(1.05); }
+
+    /* --- SECTIONS --- */
+    .section { padding: 80px 20px; max-width: 1100px; margin: auto; }
+    .section-title { 
+      font-size: 2.5rem; text-align: center; margin-bottom: 50px; 
+      background: -webkit-linear-gradient(#1d1d1f, #424245);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    /* --- IMPACT GRID --- */
+    .impact-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; }
+    .impact-item { 
+      background: white; padding: 30px; border-radius: var(--border-radius);
+      box-shadow: var(--shadow-soft); text-align: center; transition: var(--transition);
+      border: 1px solid rgba(0,0,0,0.03);
+    }
+    .impact-item:hover { transform: translateY(-5px); box-shadow: 0 15px 35px rgba(0,0,0,0.1); }
+    .impact-item strong { display: block; font-size: 3rem; color: var(--primary-color); margin-bottom: 5px; }
+
+    /* --- CARDS (Actions & Services) --- */
+    .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; }
+    .card { 
+      background: white; border-radius: var(--border-radius); overflow: hidden; 
+      box-shadow: var(--shadow-soft); transition: var(--transition);
+      display: flex; flex-direction: column; padding: 30px; text-align: center;
+      border: 1px solid rgba(0,0,0,0.03);
+    }
+    .card:hover { transform: translateY(-8px); box-shadow: 0 20px 40px rgba(0,0,0,0.12); }
+    .card h3 { margin: 15px 0 10px; font-size: 1.4rem; }
+
+    /* --- FOOTER --- */
+    footer { background: var(--secondary-color); color: #86868b; padding: 60px 20px; text-align: center; font-size: 0.9rem; }
+    footer a { color: var(--primary-color); }
+
+    /* --- ANIMATION SCROLL --- */
+    .fade-in { opacity: 0; transform: translateY(30px); transition: opacity 0.8s ease-out, transform 0.8s ease-out; }
+    .fade-in.visible { opacity: 1; transform: translateY(0); }
+
+    /* --- CHATBOT MODERNE --- */
+    .chatbot-toggle {
+        position: fixed; bottom: 30px; right: 30px;
+        width: 60px; height: 60px;
+        background: var(--primary-color); color: white;
+        border-radius: 50%; border: none;
+        box-shadow: 0 5px 20px rgba(0,122,255,0.4);
+        cursor: pointer; z-index: 2000;
+        font-size: 24px; display: flex; align-items: center; justify-content: center;
+        transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+    .chatbot-toggle:hover { transform: scale(1.1); }
+
+    .chatbot-window {
+        position: fixed; bottom: 100px; right: 30px;
+        width: 360px; height: 500px;
+        background: white; border-radius: 20px;
+        box-shadow: 0 10px 40px rgba(0,0,0,0.15);
+        z-index: 2000; display: flex; flex-direction: column;
+        overflow: hidden;
+        transform-origin: bottom right;
+        transform: scale(0); opacity: 0;
+        transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+    }
+    .chatbot-window.open { transform: scale(1); opacity: 1; }
+
+    .chat-header {
+        background: var(--primary-color); color: white; padding: 15px; font-weight: 600;
+        display: flex; justify-content: space-between; align-items: center;
+    }
+    .chat-body { 
+        flex: 1; padding: 15px; overflow-y: auto; background: #f5f5f7; display: flex; flex-direction: column; gap: 10px;
+    }
+    .chat-msg {
+        padding: 10px 14px; border-radius: 14px; max-width: 80%; font-size: 0.9rem; line-height: 1.4;
+    }
+    .chat-msg.bot { background: white; align-self: flex-start; border-bottom-left-radius: 2px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
+    .chat-msg.user { background: var(--primary-color); color: white; align-self: flex-end; border-bottom-right-radius: 2px; }
+
+    .chat-footer { padding: 10px; border-top: 1px solid #eee; background: white; }
+    .chat-input-group { display: flex; gap: 10px; margin-bottom: 10px; }
+    .chat-input-group input { 
+        flex: 1; padding: 10px; border: 1px solid #e5e5e5; border-radius: 10px; outline: none; font-family: inherit;
+    }
+    .chat-input-group button {
+        background: var(--primary-color); color: white; border: none; padding: 0 15px; border-radius: 10px; cursor: pointer;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .nav-container { flex-direction: column; gap: 10px; }
+      .hero-header h1 { font-size: 2.5rem; }
+      .chatbot-window { width: calc(100% - 40px); right: 20px; bottom: 90px; height: 60vh; }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="nav-container">
+    <a href="#" class="logo">ALIIS</a>
+    <nav>
+      <ul>
+        <li><a href="#mission">Mission</a></li>
+        <li><a href="#activites">Actions</a></li>
+        <li><a href="#don">Agir</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<section class="hero-header">
+  <div class="hero-content">
+    <h1>L'informatique,<br>pour une Lorraine inclusive.</h1>
+    <p>Association Lorraine de l'Informatique Inclusive Solidaire.</p>
+    <div class="hero-btns">
+      <a href="#don" class="btn btn-primary">Nous soutenir</a>
+      <a href="https://www.facebook.com/profile.php?id=61583281552001" target="_blank" class="btn btn-outline">Voir notre Facebook</a>
+    </div>
+  </div>
+</section>
+
+<section id="mission" class="section fade-in">
+  <h2 class="section-title">Notre Mission</h2>
+  <p style="text-align:center; max-width:800px; margin:auto; font-size:1.1rem; color:#666;">
+    ALIIS reconditionne du matériel informatique et forme au numérique pour réduire la fracture numérique. Nous donnons une seconde vie aux équipements pour créer des opportunités d'apprentissage à Nancy et Lunéville.
+  </p>
+</section>
+
+<section class="section fade-in">
+  <h2 class="section-title">Notre Impact</h2>
+  <div class="impact-grid">
+    <div class="impact-item"><strong>500+</strong><p>PC Reconditionnés</p></div>
+    <div class="impact-item"><strong>300+</strong><p>Personnes formées</p></div>
+    <div class="impact-item"><strong>100%</strong><p>Solidaire</p></div>
+  </div>
+</section>
+
+<section id="activites" class="section fade-in">
+  <h2 class="section-title">Nos Piliers d'Action</h2>
+  <div class="cards">
+    <div class="card">
+      <div style="font-size:2.5rem; margin-bottom:10px;">🛠️</div>
+      <h3>Reconditionnement</h3>
+      <p>Diagnostic, réparation et nettoyage professionnel pour maximiser la durée de vie des ordinateurs.</p>
+    </div>
+    <div class="card">
+      <div style="font-size:2.5rem; margin-bottom:10px;">🌱</div>
+      <h3>Écologie</h3>
+      <p>Réduction des déchets électroniques (e-waste) par la collecte locale et le réemploi.</p>
+    </div>
+    <div class="card">
+      <div style="font-size:2.5rem; margin-bottom:10px;">🤝</div>
+      <h3>Solidarité</h3>
+      <p>Distribution de matériel aux étudiants et familles modestes pour un accès équitable.</p>
+    </div>
+  </div>
+</section>
+
+<section id="services" class="section fade-in">
+  <h2 class="section-title">Nos Services</h2>
+  <div class="cards">
+    <div class="card">
+      <h3>🎓 Formation</h3>
+      <p>Ateliers d'initiation et de perfectionnement au numérique pour tous les âges.</p>
+    </div>
+    <div class="card">
+      <h3>☁️ Hébergement Web</h3>
+      <p>Solutions d'hébergement solidaire pour vos projets web.</p>
+    </div>
+    <div class="card">
+      <h3>🔧 Repair Café</h3>
+      <p>Apprenez à réparer vos appareils lors de nos ateliers conviviaux.</p>
+    </div>
+  </div>
+</section>
+
+<section id="don" class="section fade-in" style="text-align: center;">
+  <h2 class="section-title">Agir avec nous</h2>
+  <p style="margin-bottom: 30px;">Votre matériel a de la valeur. Ne le jetez pas, donnez-le !</p>
+  <div class="cards" style="max-width: 800px; margin: auto;">
+    <!-- Don de matériel -->
+    <div class="card" style="border: 2px solid var(--primary-color);">
+      <h3>🎒 Don de Matériel</h3>
+      <p>Ordinateurs (même HS), écrans, périphériques.</p>
+      <a href="#contact" class="btn btn-primary" style="margin-top: 15px;">Prendre RDV</a>
+    </div>
+
+    <!-- Don financier -->
+    <div class="card" style="border: 2px solid var(--primary-color);">
+      <h3>💰 Dons Financiers</h3>
+      <p>Contribuez directement à nos actions pour soutenir l’informatique inclusive.</p>
+      <a href="https://www.helloasso.com/associations/association-lorraine-pour-l-informatique-inclusive-solidaire/adhesions/adhesion-aliis" target="_blank" class="btn btn-primary" style="margin-top: 15px;">Faire un don</a>
+    </div>
+  </div>
+</section>
+
+<section id="contact" class="section fade-in">
+  <h2 class="section-title">Contact</h2>
+  <div class="cards">
+    <div class="card">
+      <h3>📞 Téléphone</h3>
+      <p><strong>07 69 39 33 02</strong></p>
+    </div>
+    <div class="card">
+      <h3>📧 Email</h3>
+      <p>associationaliis@gmail.com</p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p>© 2025 ALIIS – Association Lorraine pour l’Informatique Inclusive Solidaire</p>
+  <p>Nancy & Lunéville</p>
+</footer>
+
+<button id="chatbot-toggle" class="chatbot-toggle">🤖</button>
+
+<div id="chatbot-window" class="chatbot-window">
+  <div class="chat-header">
+    <span>ALIIS-Assist</span>
+    <span id="chatbot-close" style="cursor:pointer;">✕</span>
+  </div>
+  <div class="chat-body" id="chat-body">
+    <div class="chat-msg bot">
+      Bonjour ! Je suis l'assistant virtuel. Comment puis-je vous aider ?
+    </div>
+  </div>
+  <div class="chat-footer">
+    <div class="chat-input-group">
+      <input type="text" id="chatbot-name" placeholder="Votre Nom" style="width: 40%;">
+      <input type="email" id="chatbot-email" placeholder="Email" style="width: 60%;">
+    </div>
+    <div class="chat-input-group">
+      <input type="text" id="chatbot-input" placeholder="Votre message...">
+      <button id="chatbot-send">➤</button>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.emailjs.com/dist/email.min.js"></script>
+<script>
+  emailjs.init("TON_PUBLIC_KEY");
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+      }
+    });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+  const toggleBtn = document.getElementById('chatbot-toggle');
+  const closeBtn = document.getElementById('chatbot-close');
+  const chatWindow = document.getElementById('chatbot-window');
+  const chatBody = document.getElementById('chat-body');
+  const sendBtn = document.getElementById('chatbot-send');
+  const inputMsg = document.getElementById('chatbot-input');
+  const inputName = document.getElementById('chatbot-name');
+  const inputEmail = document.getElementById('chatbot-email');
+
+  toggleBtn.addEventListener('click', () => {
+    chatWindow.classList.add('open');
+    toggleBtn.style.transform = 'scale(0)';
+  });
+
+  closeBtn.addEventListener('click', () => {
+    chatWindow.classList.remove('open');
+    toggleBtn.style.transform = 'scale(1)';
+  });
+
+  function addMessage(text, type) {
+    const div = document.createElement('div');
+    div.className = `chat-msg ${type}`;
+    div.innerText = text;
+    chatBody.appendChild(div);
+    chatBody.scrollTop = chatBody.scrollHeight;
+  }
+
+  sendBtn.addEventListener('click', () => {
+    const msg = inputMsg.value.trim();
+    const name = inputName.value.trim() || 'Anonyme';
+    const email = inputEmail.value.trim() || 'Non renseigné';
+    if (!msg) return;
+    addMessage(msg, 'user');
+    inputMsg.value = '';
+    const params = { user_name: name, user_email: email, user_message: msg };
+    addMessage("Envoi en cours...", 'bot');
+    emailjs.send('TON_SERVICE_ID', 'TON_TEMPLATE_ID', params)
+      .then(() => addMessage("✅ Message envoyé ! Nous vous répondrons bientôt.", 'bot'))
+      .catch(() => addMessage("❌ Erreur. Contactez-nous par email classique.", 'bot'));
+  });
+</script>
+
+</body>
+</html>
